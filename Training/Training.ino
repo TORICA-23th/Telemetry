@@ -16,13 +16,14 @@ uint32_t time_ms = 0;
 uint32_t period = 1000;
 
 void setup() {
+  delay(100);
   Serial.begin(115200);
   Serial1.begin(115200);
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(rate_SW, INPUT_PULLUP);
   pinMode(zero_SW, INPUT_PULLUP);
 
-  Wire.setClock(400000);
+  //Wire.setClock(400000);
   if (!bno.begin()) {
     Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
     while (1) {
@@ -37,8 +38,8 @@ void setup() {
 
 void loop() {
   imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
-  float pitch = euler.y();
-  float roll = euler.z();
+  float pitch = euler.z();
+  float roll = euler.y();
 
   if (pitch > 180) {
     pitch -= 360;
@@ -47,6 +48,7 @@ void loop() {
     roll -= 360;
   }
   pitch = -pitch;
+  roll = -roll;
 
   pitch -= offset_pitch;
   roll -= offset_roll;
@@ -64,7 +66,7 @@ void loop() {
     Serial1.print("\n");
     delay(10);
     Serial1.print("\n");
-    delay(10);    
+    delay(10);
   }
 
 
@@ -98,8 +100,8 @@ void set_offset() {
   for (int i = 0; i < 10; i++)
   {
     imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
-    float pitch = euler.y();
-    float roll = euler.z();
+    float pitch = euler.z();
+    float roll = euler.y();
 
     if (pitch > 180) {
       pitch -= 360;
@@ -108,6 +110,7 @@ void set_offset() {
       roll -= 360;
     }
     pitch = -pitch;
+    roll = -roll;
 
     _offset_pitch += pitch;
     _offset_roll += roll;

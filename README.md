@@ -6,7 +6,7 @@
 
 Settingで以下の設定を行います。
 * Serial > Baud rate を115200に
-* Terminal > Font StyleをMonospaceに、Fontsizeを適宜調整
+* Terminal > Font Style をMonospaceに、Fontsizeを適宜調整
 ![](/setting.png)
 ## 練習用送信機
 * USBケーブルをモバイルバッテリーにさせば起動します。
